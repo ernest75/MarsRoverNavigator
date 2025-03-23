@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kapt)
     alias(libs.plugins.compose.compiler)
-   // alias(libs.plugins.hilt.android)
+    alias(libs.plugins.hilt.android)
 }
 
 android {
@@ -44,17 +44,17 @@ android {
 
 dependencies {
     implementation(project(":feature:navigation"))
-   // implementation(libs.bundles.hilt)
+    implementation(libs.bundles.hilt)
     api(platform(libs.compose.bom))
     api(libs.bundles.compose)
 
 
-   // kapt(libs.hilt.compiler)
+    kapt(libs.hilt.compiler)
 
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.bundles.ui.testing)
 
-   // kaptAndroidTest(libs.hilt.android.test.compiler)
+    kaptAndroidTest(libs.hilt.android.test.compiler)
 
     testImplementation(libs.bundles.unit.testing)
     debugImplementation(libs.androidx.ui.tooling)

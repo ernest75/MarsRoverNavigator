@@ -41,7 +41,14 @@ dependencies {
 
     kapt(libs.hilt.compiler)
 
-    testImplementation(libs.junit.jupiter)
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.bundles.ui.testing)
+
+    kaptAndroidTest(libs.hilt.android.test.compiler)
+
+    testImplementation(libs.bundles.unit.testing)
+    debugImplementation(libs.androidx.ui.tooling)
+
     testRuntimeOnly(libs.junit.jupiter.engine)
 
 }
