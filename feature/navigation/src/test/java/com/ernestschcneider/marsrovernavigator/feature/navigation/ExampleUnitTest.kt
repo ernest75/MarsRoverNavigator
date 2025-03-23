@@ -1,4 +1,4 @@
-package com.ernestschcneider.marsrovernavigator
+package com.ernestschcneider.marsrovernavigator.feature.navigation
 
 import org.junit.Test
 

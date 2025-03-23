@@ -1,23 +1,20 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kapt)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.hilt.android)
+    alias(libs.plugins.kapt)
 }
 
 android {
-    namespace = "com.ernestschcneider.marsrovernavigator"
+    namespace = "com.ernestschcneider.marsrovernavigator.feature.navigation"
     compileSdk = libs.versions.compileSdkVersion.get().toInt()
 
     defaultConfig {
-        applicationId = "com.ernestschcneider.marsrovernavigator"
         minSdk = libs.versions.minSdkVersion.get().toInt()
-        targetSdk = libs.versions.compileSdkVersion.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -37,17 +34,10 @@ android {
     kotlinOptions {
         jvmTarget = libs.versions.javaVersion.get()
     }
-    buildFeatures {
-        compose = true
-    }
 }
 
 dependencies {
-    implementation(project(":feature:navigation"))
     implementation(libs.bundles.hilt)
-    api(platform(libs.compose.bom))
-    api(libs.bundles.compose)
-
 
     kapt(libs.hilt.compiler)
 
