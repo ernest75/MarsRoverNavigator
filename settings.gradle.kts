@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "MarsRoverNavigator"
 include(":app")
- 
+include(":feature:navigation")
