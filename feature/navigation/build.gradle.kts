@@ -50,5 +50,4 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
 
     testRuntimeOnly(libs.junit.jupiter.engine)
-
 }
