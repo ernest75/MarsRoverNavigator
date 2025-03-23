@@ -37,6 +37,8 @@ android {
 }
 
 dependencies {
+    implementation(platform(libs.compose.bom))
+    implementation(libs.bundles.compose)
     implementation(libs.bundles.hilt)
 
     kapt(libs.hilt.compiler)
