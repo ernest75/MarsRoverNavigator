@@ -5,10 +5,10 @@ plugins {
 
 android {
     namespace = "com.ernestschcneider.marsrovernavigator.data"
-    compileSdk = 34
+    compileSdk = libs.versions.compileSdkVersion.get().toInt()
 
     defaultConfig {
-        minSdk = 24
+        minSdk = libs.versions.minSdkVersion.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -24,11 +24,12 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        val javaVersion = libs.versions.javaVersion.get()
+        sourceCompatibility = JavaVersion.toVersion(javaVersion)
+        targetCompatibility = JavaVersion.toVersion(javaVersion)
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = libs.versions.javaVersion.get()
     }
 }
 
