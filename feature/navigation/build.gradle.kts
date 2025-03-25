@@ -37,16 +37,10 @@ android {
 }
 
 dependencies {
-    implementation(platform(libs.compose.bom))
-    implementation(libs.bundles.compose)
+    implementation(project(":core:view"))
     implementation(libs.bundles.hilt)
 
     kapt(libs.hilt.compiler)
-
-    androidTestImplementation(platform(libs.compose.bom))
-    androidTestImplementation(libs.bundles.ui.testing)
-
-    kaptAndroidTest(libs.hilt.android.test.compiler)
 
     testImplementation(libs.bundles.unit.testing)
     debugImplementation(libs.androidx.ui.tooling)
