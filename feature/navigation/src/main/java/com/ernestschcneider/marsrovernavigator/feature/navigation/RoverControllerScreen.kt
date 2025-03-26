@@ -2,9 +2,9 @@ package com.ernestschcneider.marsrovernavigator.feature.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,10 +21,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.ernestschcneider.marsrovernavigator.view.ui.theme.MarsRoverNavigatorTheme
+import com.ernestschcneider.marsrovernavigator.feature.navigation.view.MarsPlateau
 import com.ernestschcneider.marsrovernavigator.view.R
+import com.ernestschcneider.marsrovernavigator.view.ui.theme.MarsRoverNavigatorTheme
 
 
 @Composable
@@ -41,77 +43,48 @@ private fun RoverControllerScreenContent() {
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 item {
-                    Text(stringResource(R.string.app_name), style = MaterialTheme.typography.headlineMedium)
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        stringResource(R.string.app_name),
+                        style = MaterialTheme.typography.headlineMedium
+                    )
                 }
                 item {
                     MarsPlateau(screenState)
-                    Spacer(modifier = Modifier.height(16.dp))
                 }
 
                 item {
-                    Row {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
                         Button(
-                            onClick = { },
-                            modifier = Modifier.padding(8.dp)
+                            onClick = { }
                         ) {
-                            Text("L")
+                            Text(stringResource(R.string.left_command))
                         }
                         Button(
-                            onClick = { },
-                            modifier = Modifier.padding(8.dp)
+                            onClick = { }
                         ) {
-                            Text("M")
+                            Text(stringResource(R.string.move_command))
                         }
                         Button(
-                            onClick = { },
-                            modifier = Modifier.padding(8.dp)
+                            onClick = { }
                         ) {
-                            Text("R")
+                            Text(
+                                text = stringResource(R.string.right_command)
+                            )
                         }
                     }
-
-                    Spacer(modifier = Modifier.height(16.dp))
                 }
-            }
-        }
-    }
-}
 
-@Composable
-fun MarsPlateau(screenState: RoverControllerScreenState) {
-    val gridSize = 6
-    val roverX = screenState.roverPosition.x
-    val roverY = screenState.roverPosition.y
-
-    Box(
-        modifier = Modifier
-            .padding(8.dp)
-            .border(2.dp, MaterialTheme.colorScheme.onBackground)
-            .height(360.dp)
-
-    ) {
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(gridSize),
-            modifier = Modifier.fillMaxSize(),
-            reverseLayout = true
-        ) {
-            items(gridSize * gridSize) { index ->
-                val x = index % gridSize
-                val y = index / gridSize
-
-                Box(
-                    modifier = Modifier
-                        .width(60.dp)
-                        .height(60.dp)
-                        .border(1.dp, MaterialTheme.colorScheme.onBackground)
-                        .background(
-                            if (x == roverX && y == roverY) Color.Yellow else MaterialTheme.colorScheme.background
-                        )
-                )
+                item {
+                    Button(onClick = { }) {
+                        Text(text = stringResource(R.string.execute_commands))
+                    }
+                }
             }
         }
     }
