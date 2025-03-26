@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MarsRoverNavigator</string>
+    <string name="execute_commands">Execute commands</string>
+    <string name="left_command">L</string>
+    <string name="move_command">M</string>
+    <string name="right_command">R</string>
 </resources>

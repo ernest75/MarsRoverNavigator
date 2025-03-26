@@ -38,6 +38,7 @@ android {
 
 dependencies {
     implementation(project(":core:view"))
+    implementation(project(":domain"))
     implementation(libs.bundles.hilt)
 
     kapt(libs.hilt.compiler)
