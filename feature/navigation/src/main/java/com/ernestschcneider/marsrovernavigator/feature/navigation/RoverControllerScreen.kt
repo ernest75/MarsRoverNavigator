@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.ernestschcneider.marsrovernavigator.feature.navigation.view.MarsPlateau
 import com.ernestschcneider.marsrovernavigator.feature.navigation.view.RoverControlPanel
+import com.ernestschcneider.marsrovernavigator.feature.navigation.view.Title
 import com.ernestschcneider.marsrovernavigator.view.R
 import com.ernestschcneider.marsrovernavigator.view.ui.theme.MarsRoverNavigatorTheme
 
@@ -47,21 +48,9 @@ private fun RoverControllerScreenContent() {
                 item {
                     RoverControlPanel()
                 }
-
-                item {
-
-                }
             }
         }
     }
-}
-
-@Composable
-private fun Title() {
-    Text(
-        stringResource(R.string.app_name),
-        style = MaterialTheme.typography.headlineMedium
-    )
 }
 
 @PreviewLightDark
