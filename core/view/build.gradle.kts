@@ -1,23 +1,19 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kapt)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.kapt)
 }
 
 android {
-    namespace = "com.ernestschcneider.marsrovernavigator"
+    namespace = "com.ernestschcneider.marsrovernavigator.view"
     compileSdk = libs.versions.compileSdkVersion.get().toInt()
 
     defaultConfig {
-        applicationId = "com.ernestschcneider.marsrovernavigator"
         minSdk = libs.versions.minSdkVersion.get().toInt()
-        targetSdk = libs.versions.compileSdkVersion.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -37,36 +33,18 @@ android {
     kotlinOptions {
         jvmTarget = libs.versions.javaVersion.get()
     }
-    buildFeatures {
-        compose = true
-    }
-
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-            merges += "META-INF/LICENSE.md"
-            merges += "META-INF/LICENSE-notice.md"
-        }
-    }
 }
 
 dependencies {
-    implementation(project(":feature:navigation"))
-    implementation(project(":core:view"))
-    implementation(libs.bundles.hilt)
     api(platform(libs.compose.bom))
     api(libs.bundles.compose)
-
+    api(libs.bundles.unit.testing)
+    implementation(libs.bundles.hilt)
 
     kapt(libs.hilt.compiler)
 
-    androidTestImplementation(platform(libs.compose.bom))
-    androidTestImplementation(libs.bundles.ui.testing)
-
-    kaptAndroidTest(libs.hilt.android.test.compiler)
-
-    testImplementation(libs.bundles.unit.testing)
-    debugImplementation(libs.androidx.ui.tooling)
-
+    testImplementation(libs.junit.jupiter)
     testRuntimeOnly(libs.junit.jupiter.engine)
+
+    debugImplementation(libs.bundles.compose.debug)
 }

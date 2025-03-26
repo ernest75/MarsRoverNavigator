@@ -1,4 +1,4 @@
-package com.ernestschcneider.marsrovernavigator.ui.theme
+package com.ernestschcneider.marsrovernavigator.view.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
