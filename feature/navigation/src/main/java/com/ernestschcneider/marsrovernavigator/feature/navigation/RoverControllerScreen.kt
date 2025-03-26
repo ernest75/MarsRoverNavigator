@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -39,10 +38,7 @@ private fun RoverControllerScreenContent() {
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 item {
-                    Text(
-                        stringResource(R.string.app_name),
-                        style = MaterialTheme.typography.headlineMedium
-                    )
+                    Title()
                 }
                 item {
                     MarsPlateau(screenState)
@@ -53,13 +49,19 @@ private fun RoverControllerScreenContent() {
                 }
 
                 item {
-                    Button(onClick = { }) {
-                        Text(text = stringResource(R.string.execute_commands))
-                    }
+
                 }
             }
         }
     }
+}
+
+@Composable
+private fun Title() {
+    Text(
+        stringResource(R.string.app_name),
+        style = MaterialTheme.typography.headlineMedium
+    )
 }
 
 @PreviewLightDark
