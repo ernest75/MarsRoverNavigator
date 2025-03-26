@@ -52,6 +52,7 @@ android {
 
 dependencies {
     implementation(project(":feature:navigation"))
+    implementation(project(":core:view"))
     implementation(libs.bundles.hilt)
     api(platform(libs.compose.bom))
     api(libs.bundles.compose)
