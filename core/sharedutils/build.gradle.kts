@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.ernestschcneider.marsrovernavigator.domain"
+    namespace = "com.ernestschcneider.marsrovernavigator.core.sharedutils"
     compileSdk = libs.versions.compileSdkVersion.get().toInt()
 
     defaultConfig {
@@ -34,16 +34,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.ktx)
 
-    testImplementation(libs.bundles.unit.testing)
-    testImplementation(libs.junit)
-    testImplementation(libs.mockito.core)
-    testImplementation(libs.mockito.kotlin)
-    testImplementation(libs.mockk)
-    testImplementation(libs.hilt.android.test)
-
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso)
 }
