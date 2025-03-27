@@ -2,7 +2,7 @@ name: Run test
 
 on:
   pull_request:
-    branches: [main]
+    branches: [master]
 
 jobs:
   test:
@@ -19,18 +19,8 @@ jobs:
           java-version: 17
           cache: 'gradle'
 
-      - name: Restore Gradle cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            gradle-${{ runner.os }}-
-
       - name: Grant execute permissions for gradlew
         run: chmod +x gradlew
 
       - name: Run unit tests
-        run: ./gradlew clean testDebug
+        run: ./gradlew clean testDebugUnitTest
