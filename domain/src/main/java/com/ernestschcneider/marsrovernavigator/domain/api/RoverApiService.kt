@@ -8,3 +8,4 @@ interface RoverApiService {
     suspend fun initialContact(): RoverApiResponse
     suspend fun getRoverStatus(request: RoverCommandRequest): RoverApiResponse
 }
+

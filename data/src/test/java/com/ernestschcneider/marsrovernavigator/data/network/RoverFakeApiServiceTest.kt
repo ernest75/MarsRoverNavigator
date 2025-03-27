@@ -7,7 +7,6 @@ import com.ernestschcneider.marsrovernavigator.domain.model.RoverCommandRequest
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.runBlocking
-import org.json.JSONObject
 import org.junit.Test
 
 
