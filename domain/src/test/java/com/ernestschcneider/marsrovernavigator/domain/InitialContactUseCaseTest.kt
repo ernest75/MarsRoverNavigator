@@ -1,6 +1,6 @@
 package com.ernestschcneider.marsrovernavigator.domain
 
-import com.ernestschcneider.marsrovernavigator.domain.repository.RoverRepo
+import com.ernestschcneider.marsrovernavigator.domain.repository.RoverRepository
 import com.ernestschcneider.marsrovernavigator.domain.usecase.InitialContactUseCase
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -11,7 +11,7 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class InitialContactUseCaseTest {
 
-    private val repo = mockk<RoverRepo>(relaxed = true)
+    private val repo = mockk<RoverRepository>(relaxed = true)
 
     private val useCase = InitialContactUseCase(repo)
 

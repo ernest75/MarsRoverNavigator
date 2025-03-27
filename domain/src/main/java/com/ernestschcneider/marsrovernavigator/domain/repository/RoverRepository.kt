@@ -1,9 +1,9 @@
 package com.ernestschcneider.marsrovernavigator.domain.repository
 
 import com.ernestschcneider.marsrovernavigator.domain.api.RoverApiResponse
-import org.json.JSONObject
+import com.ernestschcneider.marsrovernavigator.domain.model.RoverCommandRequest
 
-interface RoverRepo {
+interface RoverRepository {
     suspend fun getInitialContact(): RoverApiResponse
-    suspend fun getRoverStatus(jsonObject: JSONObject): RoverApiResponse
+    suspend fun getRoverStatus(request: RoverCommandRequest): RoverApiResponse
 }

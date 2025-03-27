@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.kapt)
 }
 
 android {
@@ -38,6 +40,15 @@ dependencies {
     implementation(project(":core:sharedutils"))
     implementation(libs.androidx.ktx)
     implementation(libs.gson)
+    implementation(libs.bundles.hilt)
+
+    kapt(libs.hilt.compiler)
+
+    testImplementation(libs.bundles.unit.testing)
+    debugImplementation(libs.androidx.ui.tooling)
+
+    testRuntimeOnly(libs.junit.jupiter.engine)
+
     testImplementation(libs.junit)
     testImplementation(libs.bundles.unit.testing)
     androidTestImplementation(libs.androidx.junit)
