@@ -1,7 +1,8 @@
 package com.ernestschcneider.marsrovernavigator.feature.navigation
 
-import com.ernestschcneider.marsrovernavigator.domain.model.Position
+import com.ernestschcneider.marsrovernavigator.domain.model.RoverPositionModel
 
 data class RoverControllerScreenState (
-    val roverPosition: Position = Position(0, 0),
+    val roverPosition: RoverPositionModel = RoverPositionModel(0, 0),
+    val roverDirection: String = "N"
 )

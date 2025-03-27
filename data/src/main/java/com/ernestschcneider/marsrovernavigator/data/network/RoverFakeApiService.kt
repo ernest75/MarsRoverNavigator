@@ -5,16 +5,16 @@ import com.ernestschcneider.marsrovernavigator.domain.api.RoverApiService
 import com.ernestschcneider.marsrovernavigator.domain.model.Direction
 import com.ernestschcneider.marsrovernavigator.domain.model.Position
 import com.ernestschcneider.marsrovernavigator.domain.model.RoverCommandRequest
-import com.ernestschcneider.marsrovernavigator.domain.model.RoverPositionApiModel
-import com.ernestschcneider.marsrovernavigator.domain.model.RoverStatusApiModel
+import com.ernestschcneider.marsrovernavigator.domain.model.RoverPositionModel
+import com.ernestschcneider.marsrovernavigator.domain.model.RoverStatusModel
 
 class RoverFakeApiService : RoverApiService {
 
     override suspend fun initialContact(): RoverApiResponse {
         return RoverApiResponse.Success(
-            RoverStatusApiModel(
+            RoverStatusModel(
                 roverDirection = Direction.N.name,
-                roverPosition = RoverPositionApiModel(0, 0)
+                roverPosition = RoverPositionModel(0, 0)
             )
         )
     }
@@ -52,9 +52,9 @@ class RoverFakeApiService : RoverApiService {
         }
 
         return RoverApiResponse.Success(
-            RoverStatusApiModel(
+            RoverStatusModel(
                 roverDirection = direction.name,
-                roverPosition = RoverPositionApiModel(position.x, position.y)
+                roverPosition = RoverPositionModel(position.x, position.y)
             )
         )
     }
