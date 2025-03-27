@@ -1,17 +1,19 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kapt)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.hilt.android)
 }
 
 android {
     namespace = "com.ernestschcneider.marsrovernavigator"
-    compileSdk = 34
+    compileSdk = libs.versions.compileSdkVersion.get().toInt()
 
     defaultConfig {
         applicationId = "com.ernestschcneider.marsrovernavigator"
-        minSdk = 24
-        targetSdk = 34
+        minSdk = libs.versions.minSdkVersion.get().toInt()
+        targetSdk = libs.versions.compileSdkVersion.get().toInt()
         versionCode = 1
         versionName = "1.0"
 
@@ -28,32 +30,43 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        val javaVersion = libs.versions.javaVersion.get()
+        sourceCompatibility = JavaVersion.toVersion(javaVersion)
+        targetCompatibility = JavaVersion.toVersion(javaVersion)
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = libs.versions.javaVersion.get()
     }
     buildFeatures {
         compose = true
     }
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            merges += "META-INF/LICENSE.md"
+            merges += "META-INF/LICENSE-notice.md"
+        }
+    }
 }
 
 dependencies {
+    implementation(project(":feature:navigation"))
+    implementation(project(":core:view"))
+    implementation(libs.bundles.hilt)
+    api(platform(libs.compose.bom))
+    api(libs.bundles.compose)
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
+
+    kapt(libs.hilt.compiler)
+
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.bundles.ui.testing)
+
+    kaptAndroidTest(libs.hilt.android.test.compiler)
+
+    testImplementation(libs.bundles.unit.testing)
     debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+
+    testRuntimeOnly(libs.junit.jupiter.engine)
 }

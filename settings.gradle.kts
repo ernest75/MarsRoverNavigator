@@ -21,4 +21,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "MarsRoverNavigator"
 include(":app")
- 
+include(":feature:navigation")
+include(":domain")
+include(":data")
+include(":core:view")
+include(":core:sharedutils")
