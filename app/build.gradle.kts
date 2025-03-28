@@ -53,10 +53,11 @@ android {
 dependencies {
     implementation(project(":feature:navigation"))
     implementation(project(":core:view"))
+    implementation(project(":domain"))
+    implementation(project(":data"))
     implementation(libs.bundles.hilt)
     api(platform(libs.compose.bom))
     api(libs.bundles.compose)
-
 
     kapt(libs.hilt.compiler)
 

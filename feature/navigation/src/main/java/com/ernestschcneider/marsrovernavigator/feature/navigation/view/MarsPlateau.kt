@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.ernestschcneider.marsrovernavigator.domain.model.Position
+import com.ernestschcneider.marsrovernavigator.domain.model.CoordinatesModel
 import com.ernestschcneider.marsrovernavigator.feature.navigation.RoverControllerScreenState
 import com.ernestschcneider.marsrovernavigator.view.ui.theme.MarsRoverNavigatorTheme
 
@@ -59,6 +59,6 @@ fun MarsPlateau(screenState: RoverControllerScreenState) {
 @Composable
 fun PreviewPlateau() {
     MarsRoverNavigatorTheme {
-        MarsPlateau(screenState = RoverControllerScreenState(roverPosition = Position(0, 0)))
+        MarsPlateau(screenState = RoverControllerScreenState(roverPosition = CoordinatesModel(0, 0)))
     }
 }

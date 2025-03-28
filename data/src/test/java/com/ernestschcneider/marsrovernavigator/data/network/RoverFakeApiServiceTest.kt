@@ -2,7 +2,7 @@ package com.ernestschcneider.marsrovernavigator.data.network
 
 import com.ernestschcneider.marsrovernavigator.domain.api.RoverApiResponse
 import com.ernestschcneider.marsrovernavigator.domain.model.Direction
-import com.ernestschcneider.marsrovernavigator.domain.model.Position
+import com.ernestschcneider.marsrovernavigator.domain.model.CoordinatesModel
 import com.ernestschcneider.marsrovernavigator.domain.model.RoverCommandRequest
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
@@ -35,8 +35,8 @@ class RoverFakeApiServiceTest {
     fun `GIVEN valid request WHEN getRoverStatus THEN expected result returned`() = runBlocking {
         // Given
         val request = RoverCommandRequest(
-            topRightCorner = Position(5, 5),
-            roverPosition = Position(1, 2),
+            topRightCorner = CoordinatesModel(5, 5),
+            roverPosition = CoordinatesModel(1, 2),
             roverDirection = Direction.N,
             movements = "LMLMLMLMM"
         )
@@ -56,8 +56,8 @@ class RoverFakeApiServiceTest {
     fun `GIVEN invalid movement command WHEN getRoverStatus THEN return error`() = runBlocking {
         // Given
         val request = RoverCommandRequest(
-            topRightCorner = Position(5, 5),
-            roverPosition = Position(1, 2),
+            topRightCorner = CoordinatesModel(5, 5),
+            roverPosition = CoordinatesModel(1, 2),
             roverDirection = Direction.N,
             movements = "MXR" // 'X' is invalid
         )
@@ -74,8 +74,8 @@ class RoverFakeApiServiceTest {
     fun `GIVEN rover out of bounds WHEN getRoverStatus THEN return error`() = runBlocking {
         // Given
         val request = RoverCommandRequest(
-            topRightCorner = Position(5, 5),
-            roverPosition = Position(6, 0), // x > maxX
+            topRightCorner = CoordinatesModel(5, 5),
+            roverPosition = CoordinatesModel(6, 0), // x > maxX
             roverDirection = Direction.N,
             movements = "M"
         )
@@ -92,8 +92,8 @@ class RoverFakeApiServiceTest {
     fun `GIVEN rover moves toward edge WHEN getRoverStatus THEN rover stops at edge`() = runBlocking {
         // Given
         val request = RoverCommandRequest(
-            topRightCorner = Position(5, 5),
-            roverPosition = Position(0, 0),
+            topRightCorner = CoordinatesModel(5, 5),
+            roverPosition = CoordinatesModel(0, 0),
             roverDirection = Direction.S, // moving South would go out of bounds
             movements = "MMM"
         )
@@ -113,8 +113,8 @@ class RoverFakeApiServiceTest {
     fun `GIVEN rover moves but hits East plateau boundary`() = runBlocking {
         // Given
         val request = RoverCommandRequest(
-            topRightCorner = Position(5, 5),
-            roverPosition = Position(4, 4),
+            topRightCorner = CoordinatesModel(5, 5),
+            roverPosition = CoordinatesModel(4, 4),
             roverDirection = Direction.E,
             movements = "MM" // will try to move to x=6, which is out of bounds
         )

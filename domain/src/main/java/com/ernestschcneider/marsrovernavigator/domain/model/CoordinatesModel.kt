@@ -1,3 +1,3 @@
 package com.ernestschcneider.marsrovernavigator.domain.model
 
-data class Position(var x: Int, var y: Int)
+data class CoordinatesModel(var x: Int, var y: Int)

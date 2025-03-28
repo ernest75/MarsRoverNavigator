@@ -39,12 +39,21 @@ android {
 dependencies {
     implementation(project(":core:view"))
     implementation(project(":domain"))
+    implementation(project(":core:di"))
+    implementation(project(":core:sharedutils"))
     implementation(libs.bundles.hilt)
 
     kapt(libs.hilt.compiler)
 
     testImplementation(libs.bundles.unit.testing)
+    testImplementation(libs.junit)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.mockk)
+    testImplementation(libs.hilt.android.test)
+    testImplementation(project(":core:sharedutils"))
     debugImplementation(libs.androidx.ui.tooling)
 
     testRuntimeOnly(libs.junit.jupiter.engine)
+    testImplementation(libs.junit.jupiter)
 }

@@ -3,18 +3,20 @@ package com.ernestschcneider.marsrovernavigator.data.network
 import com.ernestschcneider.marsrovernavigator.domain.api.RoverApiResponse
 import com.ernestschcneider.marsrovernavigator.domain.api.RoverApiService
 import com.ernestschcneider.marsrovernavigator.domain.model.Direction
-import com.ernestschcneider.marsrovernavigator.domain.model.Position
+import com.ernestschcneider.marsrovernavigator.domain.model.CoordinatesModel
 import com.ernestschcneider.marsrovernavigator.domain.model.RoverCommandRequest
-import com.ernestschcneider.marsrovernavigator.domain.model.RoverPositionApiModel
-import com.ernestschcneider.marsrovernavigator.domain.model.RoverStatusApiModel
+import com.ernestschcneider.marsrovernavigator.domain.model.RoverStatusModel
 
 class RoverFakeApiService : RoverApiService {
 
+    private val defaultPlateauTopCorners = CoordinatesModel(5, 5)
     override suspend fun initialContact(): RoverApiResponse {
+        val roverInitialCoordinatesModel = CoordinatesModel(0, 0)
         return RoverApiResponse.Success(
-            RoverStatusApiModel(
+            RoverStatusModel(
                 roverDirection = Direction.N.name,
-                roverPosition = RoverPositionApiModel(0, 0)
+                roverPosition = roverInitialCoordinatesModel,
+                plateauTopRightCorner = defaultPlateauTopCorners
             )
         )
     }
@@ -33,7 +35,7 @@ class RoverFakeApiService : RoverApiService {
         }
 
         val directions = listOf(Direction.N, Direction.E, Direction.S, Direction.W)
-        val position = Position(roverPosition.x, roverPosition.y)
+        val coordinatesModel = CoordinatesModel(roverPosition.x, roverPosition.y)
         var direction = roverDirection
 
         for (move in movements) {
@@ -42,19 +44,20 @@ class RoverFakeApiService : RoverApiService {
                 'R' -> direction = directions[(directions.indexOf(direction) + 1) % 4]
                 'M' -> {
                     when (direction) {
-                        Direction.N -> if (position.y < maxY) position.y++
-                        Direction.E -> if (position.x < maxX) position.x++
-                        Direction.S -> if (position.y > 0) position.y--
-                        Direction.W -> if (position.x > 0) position.x--
+                        Direction.N -> if (coordinatesModel.y < maxY) coordinatesModel.y++
+                        Direction.E -> if (coordinatesModel.x < maxX) coordinatesModel.x++
+                        Direction.S -> if (coordinatesModel.y > 0) coordinatesModel.y--
+                        Direction.W -> if (coordinatesModel.x > 0) coordinatesModel.x--
                     }
                 }
             }
         }
 
         return RoverApiResponse.Success(
-            RoverStatusApiModel(
+            RoverStatusModel(
                 roverDirection = direction.name,
-                roverPosition = RoverPositionApiModel(position.x, position.y)
+                roverPosition = CoordinatesModel(coordinatesModel.x, coordinatesModel.y),
+                plateauTopRightCorner = defaultPlateauTopCorners
             )
         )
     }
