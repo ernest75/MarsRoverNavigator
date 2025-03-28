@@ -5,8 +5,8 @@ import com.ernestschcneider.marsrovernavigator.data.mapper.RoverJsonMapper
 import com.ernestschcneider.marsrovernavigator.data.repo.RoverRepositoryImpl
 import com.ernestschcneider.marsrovernavigator.domain.api.RoverApiResponse
 import com.ernestschcneider.marsrovernavigator.domain.api.RoverApiService
-import com.ernestschcneider.marsrovernavigator.domain.model.Direction
 import com.ernestschcneider.marsrovernavigator.domain.model.CoordinatesModel
+import com.ernestschcneider.marsrovernavigator.domain.model.Direction
 import com.ernestschcneider.marsrovernavigator.domain.model.RoverCommandRequest
 import com.ernestschcneider.marsrovernavigator.domain.model.RoverStatusModel
 import io.mockk.coEvery
@@ -16,7 +16,6 @@ import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.test.runTest
-import org.json.JSONObject
 import org.junit.Test
 
 class RoverRepositoryImplTest {

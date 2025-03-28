@@ -3,7 +3,6 @@ package com.ernestschcneider.marsrovernavigator.data.repo
 import com.ernestschcneider.marsrovernavigator.data.mapper.RoverJsonMapper
 import com.ernestschcneider.marsrovernavigator.domain.api.RoverApiResponse
 import com.ernestschcneider.marsrovernavigator.domain.api.RoverApiService
-import com.ernestschcneider.marsrovernavigator.domain.model.RoverCommandRequest
 import com.ernestschcneider.marsrovernavigator.domain.repository.RoverRepository
 import org.json.JSONObject
 import javax.inject.Inject

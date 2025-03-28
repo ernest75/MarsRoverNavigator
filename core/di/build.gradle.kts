@@ -1,13 +1,12 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.hilt.android)
     alias(libs.plugins.kapt)
+    alias(libs.plugins.hilt.android)
 }
 
 android {
-    namespace = "com.ernestschcneider.marsrovernavigator.feature.navigation"
+    namespace = "com.ernestschcneider.marsrovernavigator.core.di"
     compileSdk = libs.versions.compileSdkVersion.get().toInt()
 
     defaultConfig {
@@ -37,22 +36,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:view"))
-    implementation(project(":domain"))
-    implementation(project(":core:di"))
-    testImplementation(project(":core:sharedutils"))
+
     implementation(libs.bundles.hilt)
+    implementation(libs.androidx.ktx)
 
     kapt(libs.hilt.compiler)
-
-    testImplementation(libs.bundles.unit.testing)
-    testImplementation(libs.junit)
-    testImplementation(libs.mockito.core)
-    testImplementation(libs.mockito.kotlin)
-    testImplementation(libs.mockk)
-    testImplementation(libs.hilt.android.test)
-    debugImplementation(libs.androidx.ui.tooling)
-
-    testRuntimeOnly(libs.junit.jupiter.engine)
-    testImplementation(libs.junit.jupiter)
 }
