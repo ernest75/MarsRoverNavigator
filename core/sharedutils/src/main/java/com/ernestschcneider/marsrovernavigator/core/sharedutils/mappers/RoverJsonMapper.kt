@@ -46,5 +46,4 @@ class RoverJsonMapper @Inject constructor() {
             put(MOVEMENTS_KEY, movements)
         }
     }
-
 }

@@ -22,6 +22,5 @@ class RoverRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             RoverApiResponse.Error(e.message ?: "Unknown error")
         }
-
     }
 }
