@@ -1,7 +1,7 @@
 package com.ernestschcneider.marsrovernavigator.domain.model
 
 data class RoverStatusModel (
-    val roverPosition: RoverPositionModel,
-    val roverDirection: String
+    val roverPosition: CoordinatesModel,
+    val roverDirection: String,
+    val plateauTopRightCorner: CoordinatesModel
 )
-data class RoverPositionModel(val x: Int, val y: Int)

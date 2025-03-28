@@ -7,11 +7,12 @@ import com.ernestschcneider.marsrovernavigator.core.sharedutils.constants.MarsRo
 import com.ernestschcneider.marsrovernavigator.core.sharedutils.constants.MarsRoverNavigatorConstants.X_KEY
 import com.ernestschcneider.marsrovernavigator.core.sharedutils.constants.MarsRoverNavigatorConstants.Y_KEY
 import com.ernestschcneider.marsrovernavigator.domain.model.Direction
-import com.ernestschcneider.marsrovernavigator.domain.model.Position
+import com.ernestschcneider.marsrovernavigator.domain.model.CoordinatesModel
 import com.ernestschcneider.marsrovernavigator.domain.model.RoverCommandRequest
 import org.json.JSONObject
+import javax.inject.Inject
 
-object RoverJsonMapper {
+class RoverJsonMapper @Inject constructor() {
     fun fromJson(json: JSONObject): RoverCommandRequest {
         val plateau = json.getJSONObject(TOP_RIGHT_CORNER_KEY)
         val rover = json.getJSONObject(ROVER_POSITION_KEY)
@@ -19,8 +20,8 @@ object RoverJsonMapper {
         val movements = json.getString(MOVEMENTS_KEY)
 
         return RoverCommandRequest(
-            topRightCorner = Position(plateau.getInt(X_KEY), plateau.getInt(Y_KEY)),
-            roverPosition = Position(rover.getInt(X_KEY), rover.getInt(Y_KEY)),
+            topRightCorner = CoordinatesModel(plateau.getInt(X_KEY), plateau.getInt(Y_KEY)),
+            roverPosition = CoordinatesModel(rover.getInt(X_KEY), rover.getInt(Y_KEY)),
             roverDirection = direction,
             movements = movements
         )

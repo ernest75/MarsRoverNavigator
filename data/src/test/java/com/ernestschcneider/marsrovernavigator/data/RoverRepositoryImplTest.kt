@@ -1,25 +1,29 @@
 package com.ernestschcneider.marsrovernavigator.data
 
+import com.ernestschcneider.marsrovernavigator.core.sharedutils.testhelper.TestJsonFactory
+import com.ernestschcneider.marsrovernavigator.data.mapper.RoverJsonMapper
 import com.ernestschcneider.marsrovernavigator.data.repo.RoverRepositoryImpl
 import com.ernestschcneider.marsrovernavigator.domain.api.RoverApiResponse
 import com.ernestschcneider.marsrovernavigator.domain.api.RoverApiService
 import com.ernestschcneider.marsrovernavigator.domain.model.Direction
-import com.ernestschcneider.marsrovernavigator.domain.model.Position
+import com.ernestschcneider.marsrovernavigator.domain.model.CoordinatesModel
 import com.ernestschcneider.marsrovernavigator.domain.model.RoverCommandRequest
-import com.ernestschcneider.marsrovernavigator.domain.model.RoverPositionModel
 import com.ernestschcneider.marsrovernavigator.domain.model.RoverStatusModel
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.test.runTest
+import org.json.JSONObject
 import org.junit.Test
 
 class RoverRepositoryImplTest {
 
     private val roverApiService: RoverApiService = mockk()
-    private val repository: RoverRepositoryImpl = RoverRepositoryImpl(roverApiService)
+    private val jsonMapper: RoverJsonMapper = mockk()
+    private val repository: RoverRepositoryImpl = RoverRepositoryImpl(roverApiService, jsonMapper)
 
 
     @Test
@@ -28,7 +32,8 @@ class RoverRepositoryImplTest {
         val expectedResponse = RoverApiResponse.Success(
             RoverStatusModel(
                 roverDirection = Direction.N.name,
-                roverPosition = RoverPositionModel(0, 0)
+                roverPosition = CoordinatesModel(0, 0),
+                plateauTopRightCorner = CoordinatesModel(5, 5)
             )
         )
 
@@ -45,32 +50,44 @@ class RoverRepositoryImplTest {
     }
 
     @Test
-    fun `GIVEN a valid request WHEN getRoverStatus THEN returns success response`() = runTest {
-        // Given
-        val validRequest = RoverCommandRequest(
-            topRightCorner = Position(5, 5),
-            roverPosition = Position(1, 2),
-            roverDirection = Direction.N,
-            movements = "MM"
-        )
-
-        val expectedResponse = RoverApiResponse.Success(
-            RoverStatusModel(
-                roverDirection = "N",
-                roverPosition = RoverPositionModel(1, 4)
+    fun `GIVEN a valid request WHEN getRoverStatus THEN returns success response`() {
+        runTest {
+            // Given
+            val roverDirection = "S"
+            val roverPosition = CoordinatesModel(2, 1)
+            val plateauTopRightCorner = CoordinatesModel(5, 5)
+            val json = TestJsonFactory.createRoverJson(
+                direction = roverDirection,
+                roverX = roverPosition.x,
+                roverY = roverPosition.y,
+                plateauX = plateauTopRightCorner.x,
+                plateauY = plateauTopRightCorner.y
             )
-        )
+            val validRequest = RoverCommandRequest(
+                topRightCorner = plateauTopRightCorner,
+                roverPosition = roverPosition,
+                roverDirection = Direction.valueOf(roverDirection),
+                movements = "L"
+            )
+            val expectedResponse = RoverApiResponse.Success(
+                RoverStatusModel(
+                    roverDirection = roverDirection,
+                    roverPosition = roverPosition,
+                    plateauTopRightCorner = plateauTopRightCorner
+                )
+            )
+            every { jsonMapper.fromJson(json) } returns validRequest
+            coEvery { roverApiService.getRoverStatus(validRequest) } returns expectedResponse
 
-        coEvery { roverApiService.getRoverStatus(validRequest) } returns expectedResponse
+            // When
+            val result = repository.getRoverStatus(json)
 
-        // When
-        val result = repository.getRoverStatus(validRequest)
+            // Then
+            assertTrue(result is RoverApiResponse.Success)
+            assertEquals((result as RoverApiResponse.Success).data, expectedResponse.data)
 
-        // Then
-        assertTrue(result is RoverApiResponse.Success)
-        assertEquals((result as RoverApiResponse.Success).data, expectedResponse.data)
-
-        coVerify(exactly = 1) { roverApiService.getRoverStatus(validRequest) }
+            coVerify(exactly = 1) { roverApiService.getRoverStatus(validRequest) }
+        }
     }
 
     @Test
@@ -78,20 +95,21 @@ class RoverRepositoryImplTest {
         runTest {
             // Given
             val errorMessage = "Invalid position"
-            val invalidRoverPosition = Position(6, 6)
+            val invalidPosition = 6
+            val json = TestJsonFactory.createRoverJson(roverX = invalidPosition)
+            val expectedResponse = RoverApiResponse.Error(errorMessage)
             val request = RoverCommandRequest(
-                topRightCorner = Position(5, 5),
-                roverPosition = invalidRoverPosition,
-                roverDirection = Direction.N,
-                movements = "M"
+                topRightCorner = CoordinatesModel(5, 5),
+                roverPosition = CoordinatesModel(invalidPosition, 0),
+                roverDirection = Direction.valueOf("N"),
+                movements = "L"
             )
 
-            val expectedResponse = RoverApiResponse.Error(errorMessage)
-
+            every { jsonMapper.fromJson(json) } returns request
             coEvery { roverApiService.getRoverStatus(request) } returns expectedResponse
 
             // When
-            val result = repository.getRoverStatus(request)
+            val result = repository.getRoverStatus(json)
 
             // Then
             assertTrue(result is RoverApiResponse.Error)

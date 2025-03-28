@@ -2,7 +2,7 @@ package com.ernestschcneider.marsrovernavigator.feature.navigation
 
 import com.ernestschcneider.marsrovernavigator.domain.api.RoverApiResponse
 import com.ernestschcneider.marsrovernavigator.domain.model.Direction
-import com.ernestschcneider.marsrovernavigator.domain.model.RoverPositionModel
+import com.ernestschcneider.marsrovernavigator.domain.model.CoordinatesModel
 import com.ernestschcneider.marsrovernavigator.domain.model.RoverStatusModel
 import com.ernestschcneider.marsrovernavigator.domain.usecase.GetRoverStatusUseCase
 import com.ernestschcneider.marsrovernavigator.domain.usecase.InitialContactUseCase
@@ -51,7 +51,8 @@ class RoverControllerViewModelTest {
         // Given
         val status = RoverStatusModel(
             roverDirection = "N",
-            roverPosition = RoverPositionModel(1, 3)
+            roverPosition = CoordinatesModel(1, 3),
+            plateauTopRightCorner = CoordinatesModel(5, 5)
         )
         coEvery { initialContactUseCase() } returns RoverApiResponse.Success(status)
 
@@ -74,7 +75,7 @@ class RoverControllerViewModelTest {
         // Given
         val errorMessage = "Network error"
         val expectedDirection = Direction.N.name
-        val expectedPosition = RoverPositionModel(0, 0)
+        val expectedPosition = CoordinatesModel(0, 0)
         coEvery { initialContactUseCase() } returns RoverApiResponse.Error(errorMessage)
 
         // When
