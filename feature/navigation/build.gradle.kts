@@ -41,7 +41,6 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":core:di"))
     implementation(project(":core:sharedutils"))
-    testImplementation(project(":core:sharedutils"))
     implementation(libs.bundles.hilt)
 
     kapt(libs.hilt.compiler)
@@ -52,6 +51,7 @@ dependencies {
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.mockk)
     testImplementation(libs.hilt.android.test)
+    testImplementation(project(":core:sharedutils"))
     debugImplementation(libs.androidx.ui.tooling)
 
     testRuntimeOnly(libs.junit.jupiter.engine)

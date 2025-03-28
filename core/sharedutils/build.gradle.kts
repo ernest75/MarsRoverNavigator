@@ -33,6 +33,16 @@ android {
     kotlinOptions {
         jvmTarget = libs.versions.javaVersion.get()
     }
+
+    testOptions.unitTests {
+        isReturnDefaultValues = true
+        all { tests ->
+            tests.useJUnitPlatform()
+            tests.testLogging {
+                events("passed", "failed", "skipped")
+            }
+        }
+    }
 }
 
 dependencies {
@@ -42,4 +52,17 @@ dependencies {
 
     kapt(libs.hilt.compiler)
 
+    kaptAndroidTest(libs.hilt.android.test.compiler)
+
+    testImplementation(libs.bundles.unit.testing)
+    testImplementation(libs.junit)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.mockk)
+    testImplementation(libs.hilt.android.test)
+    testImplementation(libs.json)
+    debugImplementation(libs.androidx.ui.tooling)
+
+    testRuntimeOnly(libs.junit.jupiter.engine)
+    testImplementation(libs.junit.jupiter)
 }
