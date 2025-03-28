@@ -16,27 +16,37 @@ import javax.inject.Inject
 @HiltViewModel
 class RoverControllerViewModel @Inject constructor(
     private val getRoverStatusUseCase: GetRoverStatusUseCase,
-    private val initialContactUseCase: InitialContactUseCase
+    private val initialContactUseCase: InitialContactUseCase,
 ) :
     ViewModel() {
     private val _screenState = MutableStateFlow(RoverControllerScreenState())
     val screenState: StateFlow<RoverControllerScreenState> = _screenState.asStateFlow()
 
     fun loadInitialContact() {
+        _screenState.update { it.copy(isLoading = true, error = null) }
         viewModelScope.launch {
             when (val result = initialContactUseCase()) {
                 is RoverApiResponse.Success -> {
                     val data = result.data
-                   _screenState.update { it.copy(
-                       roverPosition = data.roverPosition,
-                       roverDirection = data.roverDirection
-                   ) }
+                    _screenState.update {
+                        it.copy(
+                            roverPosition = data.roverPosition,
+                            roverDirection = data.roverDirection,
+                            isLoading = false
+                        )
+                    }
                 }
 
                 is RoverApiResponse.Error -> {
-
+                    _screenState.update {
+                        it.copy(error = result.message, isLoading = false)
+                    }
                 }
             }
         }
+    }
+
+    fun sendCommandsFromEarth() {
+
     }
 }
