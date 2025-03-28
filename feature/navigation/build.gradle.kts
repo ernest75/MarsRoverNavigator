@@ -40,6 +40,7 @@ dependencies {
     implementation(project(":core:view"))
     implementation(project(":domain"))
     implementation(project(":core:di"))
+    implementation(project(":core:sharedutils"))
     testImplementation(project(":core:sharedutils"))
     implementation(libs.bundles.hilt)
 

@@ -3,6 +3,7 @@ package com.ernestschcneider.marsrovernavigator.feature.navigation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ernestschcneider.marsrovernavigator.core.di.IoDispatcher
+import com.ernestschcneider.marsrovernavigator.core.sharedutils.mappers.RoverJsonMapper
 import com.ernestschcneider.marsrovernavigator.domain.api.RoverApiResponse
 import com.ernestschcneider.marsrovernavigator.domain.model.Movements
 import com.ernestschcneider.marsrovernavigator.domain.usecase.GetRoverStatusUseCase
@@ -21,6 +22,7 @@ import javax.inject.Inject
 class RoverControllerViewModel @Inject constructor(
     private val getRoverStatusUseCase: GetRoverStatusUseCase,
     private val initialContactUseCase: InitialContactUseCase,
+    private val roverJsonMapper: RoverJsonMapper,
     @IoDispatcher private val backgroundDispatcher: CoroutineDispatcher
 ) :
     ViewModel() {
@@ -34,24 +36,7 @@ class RoverControllerViewModel @Inject constructor(
             val result = withContext(backgroundDispatcher) {
                 initialContactUseCase()
             }
-            when (result) {
-                is RoverApiResponse.Success -> {
-                    val data = result.data
-                    _screenState.update {
-                        it.copy(
-                            roverPosition = data.roverPosition,
-                            roverDirection = data.roverDirection,
-                            isLoading = false
-                        )
-                    }
-                }
-
-                is RoverApiResponse.Error -> {
-                    _screenState.update {
-                        it.copy(error = result.message, isLoading = false)
-                    }
-                }
-            }
+            handleRoverStatusResult(result)
         }
     }
 
@@ -64,8 +49,40 @@ class RoverControllerViewModel @Inject constructor(
     fun sendCommandsFromEarth() {
         val roverPosition = screenState.value.roverPosition
         val roverDirection = screenState.value.roverDirection
-        val plateauTopRightCorner = screenState.value.topRightCorner
+        val topRightCorner = screenState.value.topRightCorner
         val movements: String = movements.joinToString(separator = "")
-        _screenState.update { it.copy(isLoading = true, error = null) }
+        val json =
+            roverJsonMapper.toJson(
+                roverPosition = roverPosition,
+                roverDirection = roverDirection,
+                topRightCorner = topRightCorner,
+                movements = movements
+            )
+        viewModelScope.launch {
+            _screenState.update { it.copy(isLoading = true, error = null) }
+            val result = withContext(backgroundDispatcher) {
+                getRoverStatusUseCase(json)
+            }
+            handleRoverStatusResult(result)
+        }
+    }
+
+    private fun handleRoverStatusResult(result: RoverApiResponse) {
+        when (result) {
+            is RoverApiResponse.Success -> {
+                val data = result.data
+                _screenState.update {
+                    it.copy(
+                        roverPosition = data.roverPosition,
+                        roverDirection = data.roverDirection,
+                        isLoading = false
+                    )
+                }
+            }
+
+            is RoverApiResponse.Error -> _screenState.update {
+                it.copy(error = result.message, isLoading = false)
+            }
+        }
     }
 }

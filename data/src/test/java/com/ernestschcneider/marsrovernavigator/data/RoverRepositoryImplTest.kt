@@ -1,7 +1,7 @@
 package com.ernestschcneider.marsrovernavigator.data
 
 import com.ernestschcneider.marsrovernavigator.core.sharedutils.testhelper.TestJsonFactory
-import com.ernestschcneider.marsrovernavigator.data.mapper.RoverJsonMapper
+import com.ernestschcneider.marsrovernavigator.core.sharedutils.mappers.RoverJsonMapper
 import com.ernestschcneider.marsrovernavigator.data.repo.RoverRepositoryImpl
 import com.ernestschcneider.marsrovernavigator.domain.api.RoverApiResponse
 import com.ernestschcneider.marsrovernavigator.domain.api.RoverApiService

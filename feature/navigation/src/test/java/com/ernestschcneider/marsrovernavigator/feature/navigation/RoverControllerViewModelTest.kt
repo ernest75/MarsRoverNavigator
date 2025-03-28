@@ -1,5 +1,6 @@
 package com.ernestschcneider.marsrovernavigator.feature.navigation
 
+import com.ernestschcneider.marsrovernavigator.core.sharedutils.mappers.RoverJsonMapper
 import com.ernestschcneider.marsrovernavigator.domain.api.RoverApiResponse
 import com.ernestschcneider.marsrovernavigator.domain.model.Direction
 import com.ernestschcneider.marsrovernavigator.domain.model.CoordinatesModel
@@ -16,6 +17,7 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import org.json.JSONObject
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -30,6 +32,7 @@ class RoverControllerViewModelTest {
 
     private val initialContactUseCase: InitialContactUseCase = mockk()
     private val getRoverStatusUseCase: GetRoverStatusUseCase = mockk()
+    private val roverJsonMapper: RoverJsonMapper = mockk()
     private lateinit var viewModel: RoverControllerViewModel
 
 
@@ -39,7 +42,8 @@ class RoverControllerViewModelTest {
         viewModel = RoverControllerViewModel(
             getRoverStatusUseCase = getRoverStatusUseCase,
             initialContactUseCase = initialContactUseCase,
-            backgroundDispatcher = UnconfinedTestDispatcher()
+            backgroundDispatcher = UnconfinedTestDispatcher(),
+            roverJsonMapper = roverJsonMapper
         )
     }
 
@@ -92,5 +96,91 @@ class RoverControllerViewModelTest {
         assertEquals(errorMessage, state.error)
         assertEquals(expectedPosition, state.roverPosition)
         assertEquals(expectedDirection, state.roverDirection)
+    }
+
+    @Test
+    fun `GIVEN success response WHEN sendCommandsFromEarth THEN updates screenState with new position and direction`() = runTest {
+        // Given
+        val currentState = viewModel.screenState.value
+        val movementString = "LMR"
+        val json = mockk<JSONObject>()
+        val initialStatus = RoverStatusModel(
+            roverDirection = "N",
+            roverPosition = CoordinatesModel(1, 3),
+            plateauTopRightCorner = CoordinatesModel(5, 5)
+        )
+
+        val updatedStatus = RoverStatusModel(
+            roverDirection = "E",
+            roverPosition = CoordinatesModel(2, 2),
+            plateauTopRightCorner = currentState.topRightCorner
+        )
+
+        coEvery {
+            roverJsonMapper.toJson(
+                roverPosition = currentState.roverPosition,
+                roverDirection = currentState.roverDirection,
+                topRightCorner = currentState.topRightCorner,
+                movements = movementString
+            )
+        } returns json
+
+        coEvery { getRoverStatusUseCase(json) } returns RoverApiResponse.Success(updatedStatus)
+        coEvery { initialContactUseCase() } returns RoverApiResponse.Success(initialStatus)
+        viewModel.loadInitialContact()
+        viewModel.addMovement("L")
+        viewModel.addMovement("M")
+        viewModel.addMovement("R")
+
+        // When
+        viewModel.sendCommandsFromEarth()
+        advanceUntilIdle()
+
+        // Then
+        val state = viewModel.screenState.value
+        assertFalse(state.isLoading)
+        assertEquals(updatedStatus.roverPosition, state.roverPosition)
+        assertEquals(updatedStatus.roverDirection, state.roverDirection)
+        assertNull(state.error)
+    }
+
+    @Test
+    fun `GIVEN error response WHEN sendCommandsFromEarth THEN updates screenState with error`() = runTest {
+        // Given
+        val currentState = viewModel.screenState.value
+        val movementString = "LMR"
+        val json = mockk<JSONObject>()
+        val errorMessage = "Rover command failed"
+        val initialStatus = RoverStatusModel(
+            roverDirection = "N",
+            roverPosition = CoordinatesModel(1, 3),
+            plateauTopRightCorner = CoordinatesModel(5, 5)
+        )
+
+        coEvery {
+            roverJsonMapper.toJson(
+                roverPosition = currentState.roverPosition,
+                roverDirection = currentState.roverDirection,
+                topRightCorner = currentState.topRightCorner,
+                movements = movementString
+            )
+        } returns json
+
+        coEvery { getRoverStatusUseCase(json) } returns RoverApiResponse.Error(errorMessage)
+        coEvery { initialContactUseCase() } returns RoverApiResponse.Success(initialStatus)
+
+        viewModel.loadInitialContact()
+        viewModel.addMovement("L")
+        viewModel.addMovement("M")
+        viewModel.addMovement("R")
+
+        // When
+        viewModel.sendCommandsFromEarth()
+        advanceUntilIdle()
+
+        // Then
+        val state = viewModel.screenState.value
+        assertFalse(state.isLoading)
+        assertEquals(errorMessage, state.error)
     }
 }

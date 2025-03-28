@@ -1,6 +1,6 @@
 package com.ernestschcneider.marsrovernavigator.data.repo
 
-import com.ernestschcneider.marsrovernavigator.data.mapper.RoverJsonMapper
+import com.ernestschcneider.marsrovernavigator.core.sharedutils.mappers.RoverJsonMapper
 import com.ernestschcneider.marsrovernavigator.domain.api.RoverApiResponse
 import com.ernestschcneider.marsrovernavigator.domain.api.RoverApiService
 import com.ernestschcneider.marsrovernavigator.domain.repository.RoverRepository

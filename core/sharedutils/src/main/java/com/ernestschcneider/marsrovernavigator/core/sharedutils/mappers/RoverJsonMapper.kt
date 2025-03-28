@@ -1,4 +1,4 @@
-package com.ernestschcneider.marsrovernavigator.data.mapper
+package com.ernestschcneider.marsrovernavigator.core.sharedutils.mappers
 
 import com.ernestschcneider.marsrovernavigator.core.sharedutils.constants.MarsRoverNavigatorConstants.MOVEMENTS_KEY
 import com.ernestschcneider.marsrovernavigator.core.sharedutils.constants.MarsRoverNavigatorConstants.ROVER_DIRECTION_KEY
@@ -26,4 +26,25 @@ class RoverJsonMapper @Inject constructor() {
             movements = movements
         )
     }
+
+    fun toJson(
+        topRightCorner: CoordinatesModel,
+        roverPosition: CoordinatesModel,
+        roverDirection: String,
+        movements: String
+    ): JSONObject {
+        return JSONObject().apply {
+            put(TOP_RIGHT_CORNER_KEY, JSONObject().apply {
+                put(X_KEY, topRightCorner.x)
+                put(Y_KEY, topRightCorner.y)
+            })
+            put(ROVER_POSITION_KEY, JSONObject().apply {
+                put(X_KEY, roverPosition.x)
+                put(Y_KEY, roverPosition.y)
+            })
+            put(ROVER_DIRECTION_KEY, roverDirection)
+            put(MOVEMENTS_KEY, movements)
+        }
+    }
+
 }
