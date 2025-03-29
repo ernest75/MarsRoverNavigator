@@ -6,12 +6,17 @@ import com.ernestschcneider.marsrovernavigator.domain.model.Direction
 import com.ernestschcneider.marsrovernavigator.domain.model.CoordinatesModel
 import com.ernestschcneider.marsrovernavigator.domain.model.RoverCommandRequest
 import com.ernestschcneider.marsrovernavigator.domain.model.RoverStatusModel
+import kotlinx.coroutines.delay
 
 class RoverFakeApiService : RoverApiService {
 
     private val defaultPlateauTopCorners = CoordinatesModel(5, 5)
     override suspend fun initialContact(): RoverApiResponse {
         val roverInitialCoordinatesModel = CoordinatesModel(0, 0)
+
+        // Simulated delay from response
+        delay(500)
+
         return RoverApiResponse.Success(
             RoverStatusModel(
                 roverDirection = Direction.N.name,
@@ -52,6 +57,9 @@ class RoverFakeApiService : RoverApiService {
                 }
             }
         }
+
+        // Simulated delay from response
+        delay(500)
 
         return RoverApiResponse.Success(
             RoverStatusModel(
