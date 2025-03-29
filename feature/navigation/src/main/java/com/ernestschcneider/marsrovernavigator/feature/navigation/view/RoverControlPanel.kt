@@ -12,9 +12,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import com.ernestschcneider.marsrovernavigator.core.sharedutils.constants.MarsNavigatorUiTestTags.LEFT_COMMAND_BUTTON_TEST_TAG
+import com.ernestschcneider.marsrovernavigator.core.sharedutils.constants.MarsNavigatorUiTestTags.RIGHT_COMMAND_BUTTON_TEST_TAG
+import com.ernestschcneider.marsrovernavigator.core.sharedutils.constants.MarsNavigatorUiTestTags.SEND_COMMAND_BUTTON_TEST_TAG
 import com.ernestschcneider.marsrovernavigator.domain.model.Movements
 import com.ernestschcneider.marsrovernavigator.view.R
 import com.ernestschcneider.marsrovernavigator.view.ui.theme.MarsRoverNavigatorTheme
@@ -29,16 +33,19 @@ fun RoverControlPanel(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Button(
+                modifier = Modifier.testTag(LEFT_COMMAND_BUTTON_TEST_TAG),
                 onClick = { onCommandAdded(Movements.LEFT) }
             ) {
                 Text(stringResource(R.string.left_command))
             }
             Button(
+                modifier = Modifier.testTag(SEND_COMMAND_BUTTON_TEST_TAG),
                 onClick = { onCommandAdded(Movements.MOVE) }
             ) {
                 Text(stringResource(R.string.move_command))
             }
             Button(
+                modifier = Modifier.testTag(RIGHT_COMMAND_BUTTON_TEST_TAG),
                 onClick = { onCommandAdded(Movements.RIGHT) }
             ) {
                 Text(
