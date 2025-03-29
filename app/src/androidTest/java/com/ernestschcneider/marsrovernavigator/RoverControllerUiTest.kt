@@ -61,7 +61,7 @@ class RoverControllerUiTest {
             Thread.sleep(1000)
             clickOnMoveCommand()
             clickOnSendCommand()
-        } verify  {
+        } verify {
             val expectedRoverCell = "$ROVER_CELL_PREFIX_TEST_TAG${0}_${1}"
             verifyPosition(expectedRoverCell)
         }
@@ -75,7 +75,7 @@ class RoverControllerUiTest {
             clickOnRCommand()
             clickOnMoveCommand()
             clickOnSendCommand()
-        } verify  {
+        } verify {
             val expectedRoverCell = "$ROVER_CELL_PREFIX_TEST_TAG${1}_${0}"
             verifyPosition(expectedRoverCell)
         }
@@ -89,7 +89,7 @@ class RoverControllerUiTest {
             clickOnLCommand()
             clickOnMoveCommand()
             clickOnSendCommand()
-        } verify  {
+        } verify {
             val initialPosition = "${0}_${0}"
             val expectedRoverCell = "$ROVER_CELL_PREFIX_TEST_TAG$initialPosition"
             verifyDirection(Direction.W.name)
