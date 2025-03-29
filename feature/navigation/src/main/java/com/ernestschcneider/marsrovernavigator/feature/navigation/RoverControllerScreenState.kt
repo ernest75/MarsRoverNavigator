@@ -7,5 +7,5 @@ data class RoverControllerScreenState (
     val roverDirection: String = "N",
     val isLoading: Boolean = false,
     val error: String? = null,
-    val topRightCorner: CoordinatesModel = CoordinatesModel(5,5)
+    val topRightCorner: CoordinatesModel = CoordinatesModel(0,0)
 )
