@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ernestschcneider.marsrovernavigator.domain.model.CoordinatesModel
 import com.ernestschcneider.marsrovernavigator.feature.navigation.view.MarsPlateau
 import com.ernestschcneider.marsrovernavigator.feature.navigation.view.RoverControlPanel
 import com.ernestschcneider.marsrovernavigator.feature.navigation.view.Title
@@ -80,7 +81,7 @@ private fun RoverControllerScreenContent(
 private fun RoverControllerScreenPreview() {
     MarsRoverNavigatorTheme {
         RoverControllerScreenContent(
-            screenState = RoverControllerScreenState(),
+            screenState = RoverControllerScreenState(topRightCorner = CoordinatesModel(5, 5)),
             onAddCommand = { },
             onSendCommands = { }
         )
