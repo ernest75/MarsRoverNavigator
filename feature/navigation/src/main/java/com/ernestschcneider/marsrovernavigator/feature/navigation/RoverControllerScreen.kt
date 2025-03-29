@@ -42,7 +42,7 @@ internal fun RoverControllerScreen(viewModel: RoverControllerViewModel = hiltVie
 }
 
 @Composable
-private fun RoverControllerScreenContent(
+fun RoverControllerScreenContent(
     screenState: RoverControllerScreenState,
     onAddCommand: (String) -> Unit,
     onSendCommands: () -> Unit
