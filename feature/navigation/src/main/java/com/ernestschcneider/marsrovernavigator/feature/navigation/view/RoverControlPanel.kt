@@ -15,27 +15,31 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import com.ernestschcneider.marsrovernavigator.domain.model.Movements
 import com.ernestschcneider.marsrovernavigator.view.R
 import com.ernestschcneider.marsrovernavigator.view.ui.theme.MarsRoverNavigatorTheme
 
 @Composable
-fun RoverControlPanel() {
+fun RoverControlPanel(
+    onCommandAdded: (String) -> Unit,
+    onSendCommands: () -> Unit
+    ) {
     Column {
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Button(
-                onClick = { }
+                onClick = { onCommandAdded(Movements.LEFT) }
             ) {
                 Text(stringResource(R.string.left_command))
             }
             Button(
-                onClick = { }
+                onClick = { onCommandAdded(Movements.MOVE) }
             ) {
                 Text(stringResource(R.string.move_command))
             }
             Button(
-                onClick = { }
+                onClick = { onCommandAdded(Movements.RIGHT) }
             ) {
                 Text(
                     text = stringResource(R.string.right_command)
@@ -43,7 +47,7 @@ fun RoverControlPanel() {
             }
         }
         Button(
-            onClick = { },
+            onClick = { onSendCommands() },
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 8.dp)
@@ -60,7 +64,10 @@ fun PreviewRoverControlPanel() {
         Box(
             modifier = Modifier.background(MaterialTheme.colorScheme.background)
         ) {
-            RoverControlPanel()
+            RoverControlPanel(
+                onCommandAdded = {},
+                onSendCommands = {}
+            )
         }
     }
 }

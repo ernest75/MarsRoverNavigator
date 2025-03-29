@@ -24,20 +24,24 @@ import com.ernestschcneider.marsrovernavigator.view.ui.theme.MarsRoverNavigatorT
 
 
 @Composable
-internal fun RoverControllerScreen(roverControllerViewModel: RoverControllerViewModel = hiltViewModel()) {
-    val screenState by roverControllerViewModel.screenState.collectAsStateWithLifecycle()
+internal fun RoverControllerScreen(viewModel: RoverControllerViewModel = hiltViewModel()) {
+    val screenState by viewModel.screenState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        roverControllerViewModel.loadInitialContact()
+        viewModel.loadInitialContact()
     }
     RoverControllerScreenContent(
-        screenState = screenState
+        screenState = screenState,
+        onAddCommand = viewModel::addCommand,
+        onSendCommands = viewModel::sendCommandsFromEarth
     )
 }
 
 @Composable
 private fun RoverControllerScreenContent(
-    screenState: RoverControllerScreenState
+    screenState: RoverControllerScreenState,
+    onAddCommand: (String) -> Unit,
+    onSendCommands: () -> Unit
 ) {
     Scaffold { paddingValues ->
         Box(modifier = Modifier
@@ -61,7 +65,10 @@ private fun RoverControllerScreenContent(
                 ) {
                     item { Title() }
                     item { MarsPlateau(screenState) }
-                    item { RoverControlPanel() }
+                    item { RoverControlPanel(
+                        onCommandAdded = onAddCommand,
+                        onSendCommands = onSendCommands
+                    ) }
                 }
             }
         }
@@ -72,6 +79,10 @@ private fun RoverControllerScreenContent(
 @Composable
 private fun RoverControllerScreenPreview() {
     MarsRoverNavigatorTheme {
-        RoverControllerScreenContent(screenState = RoverControllerScreenState())
+        RoverControllerScreenContent(
+            screenState = RoverControllerScreenState(),
+            onAddCommand = { },
+            onSendCommands = { }
+        )
     }
 }

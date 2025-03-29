@@ -128,9 +128,9 @@ class RoverControllerViewModelTest {
         coEvery { getRoverStatusUseCase(json) } returns RoverApiResponse.Success(updatedStatus)
         coEvery { initialContactUseCase() } returns RoverApiResponse.Success(initialStatus)
         viewModel.loadInitialContact()
-        viewModel.addMovement("L")
-        viewModel.addMovement("M")
-        viewModel.addMovement("R")
+        viewModel.addCommand("L")
+        viewModel.addCommand("M")
+        viewModel.addCommand("R")
 
         // When
         viewModel.sendCommandsFromEarth()
@@ -170,9 +170,9 @@ class RoverControllerViewModelTest {
         coEvery { initialContactUseCase() } returns RoverApiResponse.Success(initialStatus)
 
         viewModel.loadInitialContact()
-        viewModel.addMovement("L")
-        viewModel.addMovement("M")
-        viewModel.addMovement("R")
+        viewModel.addCommand("L")
+        viewModel.addCommand("M")
+        viewModel.addCommand("R")
 
         // When
         viewModel.sendCommandsFromEarth()

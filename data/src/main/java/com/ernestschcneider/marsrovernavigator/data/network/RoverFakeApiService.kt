@@ -15,7 +15,7 @@ class RoverFakeApiService : RoverApiService {
         val roverInitialCoordinatesModel = CoordinatesModel(0, 0)
 
         // Simulated delay from response
-        delay(2000)
+        delay(500)
 
         return RoverApiResponse.Success(
             RoverStatusModel(
@@ -59,7 +59,7 @@ class RoverFakeApiService : RoverApiService {
         }
 
         // Simulated delay from response
-        delay(2000)
+        delay(500)
 
         return RoverApiResponse.Success(
             RoverStatusModel(

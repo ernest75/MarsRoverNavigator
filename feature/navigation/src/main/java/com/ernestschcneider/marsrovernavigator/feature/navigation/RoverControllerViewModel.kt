@@ -40,7 +40,7 @@ class RoverControllerViewModel @Inject constructor(
         }
     }
 
-    fun addMovement(movement: String) {
+    fun addCommand(movement: String) {
         if (movement in Movements.ALL) {
             movements.add(movement)
         }
@@ -50,13 +50,14 @@ class RoverControllerViewModel @Inject constructor(
         val roverPosition = screenState.value.roverPosition
         val roverDirection = screenState.value.roverDirection
         val topRightCorner = screenState.value.topRightCorner
-        val movements: String = movements.joinToString(separator = "")
+        val movementsString: String = movements.joinToString(separator = "")
+        movements.clear()
         val json =
             roverJsonMapper.toJson(
                 roverPosition = roverPosition,
                 roverDirection = roverDirection,
                 topRightCorner = topRightCorner,
-                movements = movements
+                movements = movementsString
             )
         viewModelScope.launch {
             _screenState.update { it.copy(isLoading = true, error = null) }

@@ -10,9 +10,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.ernestschcneider.marsrovernavigator.domain.model.CoordinatesModel
@@ -25,6 +28,7 @@ fun MarsPlateau(screenState: RoverControllerScreenState) {
     val gridSizeY = screenState.topRightCorner.y + 1
     val roverX = screenState.roverPosition.x
     val roverY = screenState.roverPosition.y
+    val roverDirection = screenState.roverDirection
 
     Box(
         modifier = Modifier
@@ -49,8 +53,13 @@ fun MarsPlateau(screenState: RoverControllerScreenState) {
                         .border(1.dp, MaterialTheme.colorScheme.onBackground)
                         .background(
                             if (x == roverX && y == roverY) Color.Yellow else MaterialTheme.colorScheme.background
-                        )
-                )
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    if (x == roverX && y == roverY) {
+                        Text(text = roverDirection, textAlign = TextAlign.Center)
+                    }
+                }
             }
         }
     }
@@ -60,6 +69,6 @@ fun MarsPlateau(screenState: RoverControllerScreenState) {
 @Composable
 fun PreviewPlateau() {
     MarsRoverNavigatorTheme {
-        MarsPlateau(screenState = RoverControllerScreenState(roverPosition = CoordinatesModel(0, 0)))
+        MarsPlateau(screenState = RoverControllerScreenState(roverPosition = CoordinatesModel(0, 0), topRightCorner = CoordinatesModel(5, 5)))
     }
 }
