@@ -25,6 +25,7 @@ gsonVersion = "2.11.0"
 mockitoVersion= "5.2.1"
 mockkVersion = "1.13.5"
 jsonVersion = "20230227"
+paparazziVersion = "1.3.1"
 
 [libraries]
 androidx-ktx = { module = "androidx.core:core-ktx", version.ref = "androidxCoreKtxVersion" }
@@ -41,10 +42,6 @@ compose-navigation = { module = "androidx.navigation:navigation-compose", versio
 compose-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidxLifecycleVersion" }
 comose-constraint-layout = { module= "androidx.constraintlayout:constraintlayout-compose" , version.ref = "composeConstraintLayoutVersion" }
 gson = { module ="com.google.code.gson:gson", version.ref = "gsonVersion" }
-
-network-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.6.3" }
-network-serialization-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version = "1.0.0" }
-
 androidx-junit = { module = "androidx.test.ext:junit", version.ref = "androidxUnitVersion" }
 androidx-espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "androidxEspressoVersion" }
 androidx-compose-test = { module = "androidx.compose.ui:ui-test-junit4" }
@@ -86,3 +83,4 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 parcelable = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlinVersion" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinVersion" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
+paparazzi = { id = "app.cash.paparazzi", version.ref = "paparazziVersion" }
