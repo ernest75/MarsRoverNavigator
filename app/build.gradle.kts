@@ -53,6 +53,7 @@ android {
 dependencies {
     implementation(project(":feature:navigation"))
     implementation(project(":core:view"))
+    implementation(project(":core:sharedutils"))
     implementation(project(":domain"))
     implementation(project(":data"))
     implementation(libs.bundles.hilt)
