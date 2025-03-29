@@ -19,6 +19,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import com.ernestschcneider.marsrovernavigator.core.sharedutils.constants.MarsNavigatorUiTestTags.CELL_PREFIX_TEST_TAG
+import com.ernestschcneider.marsrovernavigator.core.sharedutils.constants.MarsNavigatorUiTestTags.ROVER_CELL_PREFIX_TEST_TAG
 import com.ernestschcneider.marsrovernavigator.core.sharedutils.constants.MarsNavigatorUiTestTags.TEXT_DIRECTION_TEST_TAG
 import com.ernestschcneider.marsrovernavigator.domain.model.CoordinatesModel
 import com.ernestschcneider.marsrovernavigator.feature.navigation.RoverControllerScreenState
@@ -48,8 +50,17 @@ fun MarsPlateau(screenState: RoverControllerScreenState) {
                 val x = index % gridSizeX
                 val y = index / gridSizeY
 
+                val isCellRoverAt = x == roverX && y == roverY
+                
+                val tag = if (isCellRoverAt) {
+                    "$ROVER_CELL_PREFIX_TEST_TAG${x}_$y"
+                } else {
+                    "$CELL_PREFIX_TEST_TAG${x}_$y"
+                }
+
                 Box(
                     modifier = Modifier
+                        .testTag(tag)
                         .width(60.dp)
                         .height(60.dp)
                         .border(1.dp, MaterialTheme.colorScheme.onBackground)

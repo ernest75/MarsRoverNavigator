@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.ernestschcneider.marsrovernavigator.core.sharedutils.constants.MarsNavigatorUiTestTags.LEFT_COMMAND_BUTTON_TEST_TAG
 import com.ernestschcneider.marsrovernavigator.core.sharedutils.constants.MarsNavigatorUiTestTags.RIGHT_COMMAND_BUTTON_TEST_TAG
 import com.ernestschcneider.marsrovernavigator.core.sharedutils.constants.MarsNavigatorUiTestTags.SEND_COMMANDS_BUTTON_TEST_TAG
-import com.ernestschcneider.marsrovernavigator.core.sharedutils.constants.MarsNavigatorUiTestTags.SEND_MOVE_BUTTON_TEST_TAG
+import com.ernestschcneider.marsrovernavigator.core.sharedutils.constants.MarsNavigatorUiTestTags.MOVE_BUTTON_TEST_TAG
 import com.ernestschcneider.marsrovernavigator.domain.model.Movements
 import com.ernestschcneider.marsrovernavigator.view.R
 import com.ernestschcneider.marsrovernavigator.view.ui.theme.MarsRoverNavigatorTheme
@@ -40,7 +40,7 @@ fun RoverControlPanel(
                 Text(stringResource(R.string.left_command))
             }
             Button(
-                modifier = Modifier.testTag(SEND_MOVE_BUTTON_TEST_TAG),
+                modifier = Modifier.testTag(MOVE_BUTTON_TEST_TAG),
                 onClick = { onCommandAdded(Movements.MOVE) }
             ) {
                 Text(stringResource(R.string.move_command))
