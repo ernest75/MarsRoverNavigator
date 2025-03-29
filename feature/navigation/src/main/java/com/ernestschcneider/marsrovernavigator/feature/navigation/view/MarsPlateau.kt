@@ -15,9 +15,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import com.ernestschcneider.marsrovernavigator.core.sharedutils.constants.MarsNavigatorUiTestTags.TEXT_DIRECTION_TEST_TAG
 import com.ernestschcneider.marsrovernavigator.domain.model.CoordinatesModel
 import com.ernestschcneider.marsrovernavigator.feature.navigation.RoverControllerScreenState
 import com.ernestschcneider.marsrovernavigator.view.ui.theme.MarsRoverNavigatorTheme
@@ -57,7 +59,7 @@ fun MarsPlateau(screenState: RoverControllerScreenState) {
                     contentAlignment = Alignment.Center
                 ) {
                     if (x == roverX && y == roverY) {
-                        Text(text = roverDirection, textAlign = TextAlign.Center)
+                        Text(modifier = Modifier.testTag(TEXT_DIRECTION_TEST_TAG), text = roverDirection, textAlign = TextAlign.Center)
                     }
                 }
             }
