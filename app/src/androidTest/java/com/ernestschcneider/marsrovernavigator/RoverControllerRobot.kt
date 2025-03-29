@@ -26,6 +26,13 @@ fun launchRoverControllerScreen(
     class RoverControllerRobot(
         private val rule: AndroidComposeTestRule<ActivityScenarioRule<MainActivity>, MainActivity>
     ) {
+
+        infix fun verify(
+            block: RoverControllerVerification.() -> Unit
+        ): RoverControllerVerification {
+            return RoverControllerVerification(rule).apply(block)
+        }
+
         fun clickOnLCommand() {
             rule.onNodeWithTag(LEFT_COMMAND_BUTTON_TEST_TAG)
                 .performClick()
@@ -34,12 +41,6 @@ fun launchRoverControllerScreen(
         fun clickOnSendCommand() = runTest {
             rule.onNodeWithTag(SEND_COMMANDS_BUTTON_TEST_TAG)
                 .performClick()
-        }
-
-        infix fun verify(
-            block: RoverControllerVerification.() -> Unit
-        ): RoverControllerVerification {
-            return RoverControllerVerification(rule).apply(block)
         }
 
         fun clickOnRCommand() {
@@ -87,4 +88,3 @@ fun launchRoverControllerScreen(
             rule.onNodeWithTag(expectedRoverCellTestTag).assertIsDisplayed()
         }
     }
-
