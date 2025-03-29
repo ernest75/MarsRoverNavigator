@@ -21,7 +21,8 @@ import com.ernestschcneider.marsrovernavigator.view.ui.theme.MarsRoverNavigatorT
 
 @Composable
 fun MarsPlateau(screenState: RoverControllerScreenState) {
-    val gridSize = 6
+    val gridSizeX = screenState.topRightCorner.x + 1
+    val gridSizeY = screenState.topRightCorner.y + 1
     val roverX = screenState.roverPosition.x
     val roverY = screenState.roverPosition.y
 
@@ -33,13 +34,13 @@ fun MarsPlateau(screenState: RoverControllerScreenState) {
 
     ) {
         LazyVerticalGrid(
-            columns = GridCells.Fixed(gridSize),
+            columns = GridCells.Fixed(gridSizeX),
             modifier = Modifier.fillMaxSize(),
             reverseLayout = true
         ) {
-            items(gridSize * gridSize) { index ->
-                val x = index % gridSize
-                val y = index / gridSize
+            items(gridSizeX * gridSizeY) { index ->
+                val x = index % gridSizeX
+                val y = index / gridSizeY
 
                 Box(
                     modifier = Modifier

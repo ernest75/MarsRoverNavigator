@@ -31,8 +31,8 @@ class RoverControllerViewModel @Inject constructor(
     private val movements = mutableListOf<String>()
 
     fun loadInitialContact() {
-        _screenState.update { it.copy(isLoading = true, error = null) }
         viewModelScope.launch {
+        _screenState.update { it.copy(isLoading = true, error = null) }
             val result = withContext(backgroundDispatcher) {
                 initialContactUseCase()
             }
@@ -73,6 +73,7 @@ class RoverControllerViewModel @Inject constructor(
                 val data = result.data
                 _screenState.update {
                     it.copy(
+                        topRightCorner = data.plateauTopRightCorner,
                         roverPosition = data.roverPosition,
                         roverDirection = data.roverDirection,
                         isLoading = false
