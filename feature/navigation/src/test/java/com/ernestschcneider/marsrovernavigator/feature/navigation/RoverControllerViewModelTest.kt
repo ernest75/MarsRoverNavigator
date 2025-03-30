@@ -61,7 +61,7 @@ class RoverControllerViewModelTest {
             coEvery { initialContactUseCase() } returns RoverApiResponse.Success(status)
 
             // When
-            viewModel.loadInitialContact()
+            viewModel.processIntent(RoverControllerIntent.LoadInitialContact)
 
             // Wait for coroutine to finish
             advanceUntilIdle()
@@ -85,7 +85,7 @@ class RoverControllerViewModelTest {
             coEvery { initialContactUseCase() } returns RoverApiResponse.Error(errorMessage)
 
             // When
-            viewModel.loadInitialContact()
+            viewModel.processIntent(RoverControllerIntent.LoadInitialContact)
 
             // Wait for coroutine to finish
             advanceUntilIdle()
@@ -129,13 +129,13 @@ class RoverControllerViewModelTest {
 
             coEvery { getRoverStatusUseCase(json) } returns RoverApiResponse.Success(updatedStatus)
             coEvery { initialContactUseCase() } returns RoverApiResponse.Success(initialStatus)
-            viewModel.loadInitialContact()
-            viewModel.addCommand("L")
-            viewModel.addCommand("M")
-            viewModel.addCommand("R")
+            viewModel.processIntent(RoverControllerIntent.LoadInitialContact)
+            viewModel.processIntent(RoverControllerIntent.AddCommand("L"))
+            viewModel.processIntent(RoverControllerIntent.AddCommand("M"))
+            viewModel.processIntent(RoverControllerIntent.AddCommand("R"))
 
             // When
-            viewModel.sendCommandsFromEarth()
+            viewModel.processIntent(RoverControllerIntent.SendCommands)
             advanceUntilIdle()
 
             // Then
@@ -173,10 +173,10 @@ class RoverControllerViewModelTest {
             coEvery { getRoverStatusUseCase(json) } returns RoverApiResponse.Error(errorMessage)
             coEvery { initialContactUseCase() } returns RoverApiResponse.Success(initialStatus)
 
-            viewModel.loadInitialContact()
-            viewModel.addCommand("L")
-            viewModel.addCommand("M")
-            viewModel.addCommand("R")
+            viewModel.processIntent(RoverControllerIntent.LoadInitialContact)
+            viewModel.processIntent(RoverControllerIntent.AddCommand("L"))
+            viewModel.processIntent(RoverControllerIntent.AddCommand("M"))
+            viewModel.processIntent(RoverControllerIntent.AddCommand("R"))
 
             // When
             viewModel.sendCommandsFromEarth()

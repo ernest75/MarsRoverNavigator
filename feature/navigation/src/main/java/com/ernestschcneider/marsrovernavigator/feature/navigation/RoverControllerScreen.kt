@@ -32,20 +32,18 @@ internal fun RoverControllerScreen(viewModel: RoverControllerViewModel = hiltVie
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        viewModel.loadInitialContact()
+        viewModel.processIntent(RoverControllerIntent.LoadInitialContact)
     }
     RoverControllerScreenContent(
         screenState = screenState,
-        onAddCommand = viewModel::addCommand,
-        onSendCommands = viewModel::sendCommandsFromEarth
+        onIntent = viewModel::processIntent
     )
 }
 
 @Composable
 fun RoverControllerScreenContent(
     screenState: RoverControllerScreenState,
-    onAddCommand: (String) -> Unit,
-    onSendCommands: () -> Unit
+    onIntent: (RoverControllerIntent) -> Unit
 ) {
     Scaffold { paddingValues ->
         Box(modifier = Modifier
@@ -72,8 +70,8 @@ fun RoverControllerScreenContent(
                     item { Title() }
                     item { MarsPlateau(screenState) }
                     item { RoverControlPanel(
-                        onCommandAdded = onAddCommand,
-                        onSendCommands = onSendCommands
+                        onCommandAdded = { onIntent(RoverControllerIntent.AddCommand(it)) },
+                        onSendCommands = { onIntent(RoverControllerIntent.SendCommands) }
                     ) }
                 }
             }
@@ -87,8 +85,7 @@ private fun RoverControllerScreenPreview() {
     MarsRoverNavigatorTheme {
         RoverControllerScreenContent(
             screenState = RoverControllerScreenState(topRightCorner = CoordinatesModel(5, 5)),
-            onAddCommand = { },
-            onSendCommands = { }
+            onIntent = { }
         )
     }
 }

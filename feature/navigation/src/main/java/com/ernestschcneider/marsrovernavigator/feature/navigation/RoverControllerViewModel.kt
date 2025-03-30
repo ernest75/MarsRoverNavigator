@@ -28,7 +28,16 @@ class RoverControllerViewModel @Inject constructor(
     ViewModel() {
     private val _screenState = MutableStateFlow(RoverControllerScreenState())
     val screenState: StateFlow<RoverControllerScreenState> = _screenState.asStateFlow()
+
     private val movements = mutableListOf<String>()
+
+    fun processIntent(intent: RoverControllerIntent) {
+        when (intent) {
+            is RoverControllerIntent.LoadInitialContact -> loadInitialContact()
+            is RoverControllerIntent.AddCommand -> addCommand(intent.movement)
+            is RoverControllerIntent.SendCommands -> sendCommandsFromEarth()
+        }
+    }
 
     fun loadInitialContact() {
         viewModelScope.launch {
