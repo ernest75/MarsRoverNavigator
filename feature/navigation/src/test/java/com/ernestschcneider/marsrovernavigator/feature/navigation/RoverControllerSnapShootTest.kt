@@ -2,12 +2,17 @@ package com.ernestschcneider.marsrovernavigator.feature.navigation
 
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
+import com.ernestschcneider.marsrovernavigator.core.sharedutils.constants.MarsNavigatorUiTestTags.SCREENSHOT_TEST_TAG
 import com.ernestschcneider.marsrovernavigator.domain.model.CoordinatesModel
 import com.ernestschcneider.marsrovernavigator.domain.model.Direction
 import com.ernestschcneider.marsrovernavigator.view.ui.theme.MarsRoverNavigatorTheme
 import org.junit.Rule
 import org.junit.Test
 
+import org.junit.jupiter.api.Tag
+
+
+@Tag(SCREENSHOT_TEST_TAG)
 class RoverControllerSnapShootTest {
 
     @get:Rule

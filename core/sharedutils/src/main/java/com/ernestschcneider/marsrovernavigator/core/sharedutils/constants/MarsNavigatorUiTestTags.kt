@@ -11,4 +11,5 @@ object MarsNavigatorUiTestTags {
     const val SEND_COMMANDS_BUTTON_TEST_TAG = "sendCommandsButtonTestTag"
     const val CELL_PREFIX_TEST_TAG = "cellPrefixTestTag"
     const val ROVER_CELL_PREFIX_TEST_TAG = "roverCellPrefixTestTag"
+    const val SCREENSHOT_TEST_TAG = "screenshotTestTag"
 }

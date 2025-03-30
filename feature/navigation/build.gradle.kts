@@ -35,6 +35,18 @@ android {
     kotlinOptions {
         jvmTarget = libs.versions.javaVersion.get()
     }
+
+    testOptions.unitTests {
+        isReturnDefaultValues = true
+        all { tests ->
+            tests.useJUnitPlatform() {
+                excludeTags("screenshotTestTag")
+            }
+            tests.testLogging {
+                events("passed", "failed", "skipped")
+            }
+        }
+    }
 }
 
 dependencies {
@@ -57,4 +69,17 @@ dependencies {
 
     testRuntimeOnly(libs.junit.jupiter.engine)
     testImplementation(libs.junit.jupiter)
+}
+
+tasks.register<Test>("screenshotTests") {
+    description = "Runs Paparazzi screenshot tests using JUnit 4"
+    group = "verification"
+
+    testClassesDirs = sourceSets["test"].output.classesDirs
+    classpath = sourceSets["test"].runtimeClasspath
+
+    useJUnit() // Required for Paparazzi
+
+    // Match only screenshot test classes
+    include("**/*RoverControllerSnapShootTest.class")
 }
