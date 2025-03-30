@@ -56,8 +56,6 @@ dependencies {
 
     testImplementation(libs.bundles.unit.testing)
     testImplementation(libs.junit)
-    testImplementation(libs.mockito.core)
-    testImplementation(libs.mockito.kotlin)
     testImplementation(libs.mockk)
     testImplementation(libs.hilt.android.test)
     testImplementation(libs.json)
