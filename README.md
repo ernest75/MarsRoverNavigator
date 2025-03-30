@@ -153,7 +153,7 @@ Workflow config can be found under `.github/workflows/`.
 
 ## Preview
 
-![App Preview]\(docs/MarsRoverDemo\.gif)
+![App Preview](docs/MarsRoverDemo.gif)
 
 
 
