@@ -70,16 +70,3 @@ dependencies {
     testRuntimeOnly(libs.junit.jupiter.engine)
     testImplementation(libs.junit.jupiter)
 }
-
-tasks.register<Test>("screenshotTests") {
-    description = "Runs Paparazzi screenshot tests using JUnit 4"
-    group = "verification"
-
-    testClassesDirs = sourceSets["test"].output.classesDirs
-    classpath = sourceSets["test"].runtimeClasspath
-
-    useJUnit() // Required for Paparazzi
-
-    // Match only screenshot test classes
-    include("**/*RoverControllerSnapShootTest.class")
-}
