@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.kapt)
+    alias(libs.plugins.paparazzi)
 }
 
 android {
@@ -33,6 +34,18 @@ android {
     }
     kotlinOptions {
         jvmTarget = libs.versions.javaVersion.get()
+    }
+
+    testOptions.unitTests {
+        isReturnDefaultValues = true
+        all { tests ->
+            tests.useJUnitPlatform() {
+                excludeTags("screenshotTestTag")
+            }
+            tests.testLogging {
+                events("passed", "failed", "skipped")
+            }
+        }
     }
 }
 

@@ -23,4 +23,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run unit tests
-        run: ./gradlew clean testDebugUnitTest
+        run: ./gradlew testDebugUnitTest
+
+      - name: Run Paparazzi screenshot verification
+        run: ./gradlew verifyPaparazzi

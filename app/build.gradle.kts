@@ -41,6 +41,18 @@ android {
         compose = true
     }
 
+    testOptions.unitTests {
+        isReturnDefaultValues = true
+        all { tests ->
+            tests.useJUnitPlatform() {
+                excludeTags("screenshotTestTag")
+            }
+            tests.testLogging {
+                events("passed", "failed", "skipped")
+            }
+        }
+    }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"

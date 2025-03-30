@@ -31,6 +31,18 @@ android {
     kotlinOptions {
         jvmTarget = libs.versions.javaVersion.get()
     }
+    testOptions.unitTests {
+        isReturnDefaultValues = true
+        all { tests ->
+            tests.useJUnitPlatform() {
+                excludeTags("screenshotTestTag")
+            }
+            tests.testLogging {
+                events("passed", "failed", "skipped")
+            }
+        }
+    }
+
 }
 
 dependencies {
