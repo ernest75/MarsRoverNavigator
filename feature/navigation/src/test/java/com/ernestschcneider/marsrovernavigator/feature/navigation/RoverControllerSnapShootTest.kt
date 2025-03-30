@@ -28,8 +28,7 @@ class RoverControllerSnapShootTest {
                     screenState = RoverControllerScreenState(
                         isLoading = true
                     ),
-                    onAddCommand = {},
-                    onSendCommands = {}
+                    onIntent = {}
                 )
             }
         }
@@ -44,8 +43,7 @@ class RoverControllerSnapShootTest {
                         isLoading = false,
                         topRightCorner = CoordinatesModel(5,5)
                     ),
-                    onAddCommand = {},
-                    onSendCommands = {}
+                   onIntent = {}
                 )
             }
         }
@@ -62,8 +60,7 @@ class RoverControllerSnapShootTest {
                         roverPosition = CoordinatesModel(1,1),
                         roverDirection = Direction.W.name
                     ),
-                    onAddCommand = {},
-                    onSendCommands = {}
+                    onIntent = {}
                 )
             }
         }
