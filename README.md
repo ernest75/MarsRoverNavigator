@@ -148,7 +148,6 @@ Workflow config can be found under `.github/workflows/`.
 ## App Flow
 
 - On app launch, an initial request ("initial contact") is automatically triggered.
-- Similarly, a delay is also introduced when sending user commands to simulate real-world response times.
 - This request fetches the default Mars plateau size, rover's starting position, and its facing direction.
 - Once the data is received, the UI is rendered based on the returned state.
 - Users can then interact using `L`, `M`, and `R` command buttons to rotate or move the rover.
