@@ -91,7 +91,7 @@ app/
 ### Screenshot Tests (Paparazzi)
 
 ```bash
-./gradlew screenshotTests
+./gradlew verifyPaparazzi
 ```
 
 Or record new references:
