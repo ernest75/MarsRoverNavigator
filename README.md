@@ -74,6 +74,7 @@ app/
 ### Testing
 
 - **JUnit 5**: Modern testing framework for writing and running unit tests.
+- **JUnit 4**: Still used in combination with Paparazzi, which relies on it for screenshot testing.
 - **MockK**: Provides mocking capabilities for Kotlin, used extensively in unit tests.
 - **Paparazzi**: Enables screenshot testing without the need for emulators or devices.
 
@@ -128,6 +129,8 @@ Workflow config can be found under `.github/workflows/`.
 
 ## Considerations
 
+- The app supports both Light and Dark modes and adapts UI elements accordingly using dynamic theming.
+
 - A small delay has been added to all network-like responses (initial contact and command submission) to simulate real-world request latency.
 
 - ViewModel logic, UseCases, Repository implementations, Mappers, and Fake API have been unit tested to ensure isolated business logic and correct data flow.
@@ -138,7 +141,7 @@ Workflow config can be found under `.github/workflows/`.
 
 - Coroutine testing uses JUnit5 + `StandardTestDispatcher`.
 
-- UI tested with Compose test APIs and test tags.
+- UI tests are implemented using the Robot pattern to improve readability, reusability, and maintainability of interaction logic.
 
 ---
 
